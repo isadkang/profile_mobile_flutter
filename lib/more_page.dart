@@ -5,6 +5,15 @@ class MorePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic> items =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+
+    String profileImage = (items['name'] == 'Muhammad Irsyad Nataprawira' ||
+            items['name'] == 'M Irsyad N' ||
+            items['name '] == 'Muhammad Irsyad N')
+        ? 'images/profile.png'
+        : 'images/image.png';
+
     return Scaffold(
       backgroundColor: Colors.blueGrey[900],
       appBar: AppBar(
@@ -13,7 +22,16 @@ class MorePage extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pushReplacementNamed(context, '/profile');
+            Navigator.pushReplacementNamed(
+              context,
+              '/profile',
+              arguments: {
+                'name': items['name'],
+                'role': items['role'],
+                'school': items['school'],
+                'major': items['major'],
+              },
+            );
           },
         ),
         title: const Text(
@@ -26,18 +44,18 @@ class MorePage extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: <Widget>[
-              const Card(
+              Card(
                 color: Colors.white10,
                 child: Padding(
-                  padding: EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: Row(
                     children: <Widget>[
                       CircleAvatar(
-                        backgroundImage: AssetImage('images/profile.png'),
+                        backgroundImage: AssetImage(profileImage),
                         radius: 30.0,
                       ),
-                      SizedBox(width: 10),
-                      Expanded(
+                      const SizedBox(width: 10),
+                      const Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -63,47 +81,51 @@ class MorePage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "My Skill",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+              if (items['name'] == 'Muhammad Irsyad Nataprawira' ||
+                  items['name'] == 'M Irsyad N' ||
+                  items['name'] == 'Muhammad Irsyad N') ...[
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "My Skill",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              GridView.count(
-                crossAxisCount: 3,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.zero,
-                childAspectRatio: 3.0,
-                children: <String>[
-                  'React',
-                  'Flutter',
-                  'Laravel',
-                  'Javascript',
-                  'Figma',
-                  'Vue'
-                ].map((String skill) {
-                  return GridTile(
-                    child: Card(
-                      color: Colors.blueGrey,
-                      child: Center(
-                        child: Text(
-                          skill,
-                          style: const TextStyle(
-                            color: Colors.white,
+                const SizedBox(height: 16),
+                GridView.count(
+                  crossAxisCount: 3,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.zero,
+                  childAspectRatio: 3.0,
+                  children: <String>[
+                    'React',
+                    'Flutter',
+                    'Laravel',
+                    'Javascript',
+                    'Figma',
+                    'Vue'
+                  ].map((String skill) {
+                    return GridTile(
+                      child: Card(
+                        color: Colors.blueGrey,
+                        child: Center(
+                          child: Text(
+                            skill,
+                            style: const TextStyle(
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                }).toList(),
-              ),
+                    );
+                  }).toList(),
+                ),
+              ],
               const SizedBox(height: 16),
               const Align(
                 alignment: Alignment.centerLeft,
@@ -128,7 +150,7 @@ class MorePage extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               _bubbleMessage(
-                text: "My name Muhammad Irsyad Nataprawira",
+                text: "My name ${items['name']}",
                 isSender: true,
               ),
               const SizedBox(height: 8),
@@ -139,7 +161,7 @@ class MorePage extends StatelessWidget {
               const SizedBox(height: 8),
               _bubbleMessage(
                 text:
-                    "I'am a student Of Wikrama Vocational High School Majoring on Software Engineer and Game Developer",
+                    "I'am a student Of ${items['school']} Majoring on ${items['major']}",
                 isSender: true,
               ),
               const SizedBox(height: 8),
@@ -149,29 +171,7 @@ class MorePage extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               _bubbleMessage(
-                text:
-                    "I'm also interested in Web Development and Mobile Development",
-                isSender: true,
-              ),
-              const SizedBox(height: 8),
-              _bubbleMessage(
-                text: "What youa are learning?",
-                isSender: false,
-              ),
-              const SizedBox(height: 8),
-              _bubbleMessage(
-                text: "Currently learning Flutter, Dart, and React Native",
-                isSender: true,
-              ),
-              const SizedBox(height: 8),
-              _bubbleMessage(
-                text: "What you feel about Flutter?",
-                isSender: false,
-              ),
-              const SizedBox(height: 8),
-              _bubbleMessage(
-                text:
-                    "I'm so happy learning Flutter for build Multi-cross application",
+                text: "I'm also interested in ${items['role']}",
                 isSender: true,
               ),
               const SizedBox(height: 8),

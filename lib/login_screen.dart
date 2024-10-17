@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _roleController = TextEditingController();
+  final TextEditingController _schoolController = TextEditingController();
+  final TextEditingController _majorController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +28,8 @@ class LoginScreen extends StatelessWidget {
                 children: [
                   Image.asset(
                     'images/bg-2.png',
-                    height: 300,
-                    width: 300,
+                    height: 200,
+                    width: 200,
                   ),
                   SizedBox(height: size.height * 0.03),
                   Padding(
@@ -40,6 +50,7 @@ class LoginScreen extends StatelessWidget {
                       vertical: 10,
                     ),
                     child: TextField(
+                      controller: _nameController,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 20,
@@ -54,10 +65,10 @@ class LoginScreen extends StatelessWidget {
                         hintText: 'Enter username',
                         hintStyle: const TextStyle(
                           color: Colors.black45,
-                          fontSize: 19,
+                          fontSize: 12,
                         ),
                         label: const Text(
-                          'Username',
+                          'Your Name',
                           style: TextStyle(
                             color: Colors.black,
                           ),
@@ -71,7 +82,7 @@ class LoginScreen extends StatelessWidget {
                       vertical: 10,
                     ),
                     child: TextField(
-                      obscureText: true,
+                      controller: _roleController,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 20,
@@ -83,13 +94,77 @@ class LoginScreen extends StatelessWidget {
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(15),
                         ),
-                        hintText: 'Password',
+                        hintText: 'Enter Role Job',
                         hintStyle: const TextStyle(
                           color: Colors.black45,
-                          fontSize: 19,
+                          fontSize: 12,
                         ),
                         label: const Text(
-                          'Password',
+                          'Role Job',
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 25,
+                      vertical: 10,
+                    ),
+                    child: TextField(
+                      controller: _schoolController,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 22,
+                        ),
+                        fillColor: Colors.grey[200],
+                        filled: true,
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        hintText: 'School Name',
+                        hintStyle: const TextStyle(
+                          color: Colors.black45,
+                          fontSize: 12,
+                        ),
+                        label: const Text(
+                          'School',
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 25,
+                      vertical: 10,
+                    ),
+                    child: TextField(
+                      controller: _majorController,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 22,
+                        ),
+                        fillColor: Colors.grey[200],
+                        filled: true,
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        hintText: 'Major Name',
+                        hintStyle: const TextStyle(
+                          color: Colors.black45,
+                          fontSize: 12,
+                        ),
+                        label: const Text(
+                          'Major',
                           style: TextStyle(
                             color: Colors.black,
                           ),
@@ -125,7 +200,28 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/profile');
+                            if (_nameController.text.isNotEmpty &&
+                                _roleController.text.isNotEmpty &&
+                                _schoolController.text.isNotEmpty &&
+                                _majorController.text.isNotEmpty) {
+                              Navigator.pushReplacementNamed(
+                                  context, '/profile',
+                                  arguments: {
+                                    'name': _nameController.text,
+                                    'role': _roleController.text,
+                                    'school': _schoolController.text,
+                                    'major': _majorController.text
+                                  });
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    'Tolong masukan data dengan benar!',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              );
+                            }
                           },
                         ),
                       ],

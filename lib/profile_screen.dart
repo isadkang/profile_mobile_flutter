@@ -5,6 +5,15 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic> item =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+
+    String profileImage = (item['name'] == 'Muhammad Irsyad Nataprawira' ||
+            item['name'] == 'M Irsyad N' ||
+            item['name '] == 'Muhammad Irsyad N')
+        ? 'images/profile.png'
+        : 'images/image.png';
+
     return Scaffold(
       backgroundColor: Colors.grey[900],
       body: SafeArea(
@@ -18,14 +27,14 @@ class ProfileScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const SizedBox(height: 20),
-                const CircleAvatar(
+                CircleAvatar(
                   radius: 60,
-                  backgroundImage: AssetImage('images/profile.png'),
+                  backgroundImage: AssetImage(profileImage),
                 ),
                 const SizedBox(height: 20),
-                const Text(
-                  'Muhammad Irsyad Nataprawira',
-                  style: TextStyle(
+                Text(
+                  item['name'],
+                  style: const TextStyle(
                     fontSize: 22,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -33,7 +42,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Frontend Developer | Mobile Developer',
+                  item['role'],
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.blueGrey[100],
@@ -42,7 +51,13 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/more');
+                    Navigator.pushReplacementNamed(context, '/more',
+                        arguments: {
+                          'name': item['name'],
+                          'role': item['role'],
+                          'school': item['school'],
+                          'major': item['major'],
+                        });
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.indigo[300],
@@ -54,6 +69,30 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   child: const Text(
                     'Click For More',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(
+                      context,
+                      '/',
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.indigo[300],
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                  ),
+                  child: const Text(
+                    'Logout',
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.white,

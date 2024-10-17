@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:profile_page/login_screen.dart';
-// import 'package:profile_page/profile_screen.dart';
 import 'package:profile_page/more_page.dart';
 import 'package:profile_page/profile_screen.dart';
 
